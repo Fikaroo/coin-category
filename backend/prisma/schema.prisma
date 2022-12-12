@@ -1,0 +1,98 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userName String @unique
+  password String
+
+  role Role @default(USER)
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name  String
+  image String
+
+  coin Coin[]
+}
+
+model Coin {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name        String
+  title       String
+  description String   @db.Text
+  image       String[]
+
+  year         Int
+  denomination String
+  weight       Decimal
+  price        Decimal
+
+  issuingCountry Country @relation(fields: [countryId], references: [id])
+  countryId      Int
+
+  quality   Quality @relation(fields: [qualityId], references: [id])
+  qualityId Int
+
+  composition   Composition @relation(fields: [compositionId], references: [id])
+  compositionId Int
+
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+}
+
+model Country {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String @unique
+  coin Coin[]
+}
+
+model Composition {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String @unique
+  coin Coin[]
+}
+
+model Quality {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String @unique
+  coin Coin[]
+}
+
+model Denomination {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  name String @unique
+}

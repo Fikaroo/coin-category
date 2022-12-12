@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  input {
+    @apply focus:!ring-0 focus:!border-gray-300;
+  }
+}
