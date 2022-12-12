@@ -32,8 +32,20 @@
 $ npm install
 ```
 
-## Running the app
+```bash
+# Create db
+$ npm start:db:up
+```
+```bash
+# Create Models
+$ npm start:db:migrate:dev
+# Generate Models DataTypes
+$ npm prisma generate
+# Generate Seed
+$ npm start:db:seed
+```
 
+## Running the app
 ```bash
 # development
 $ npm run start
